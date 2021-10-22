@@ -1,0 +1,44 @@
+ARG := $(PROJ)
+FAMILY ?= "Agilex"
+DEVICE ?= "AGFB014F25A2E2V"
+
+#FAMILY ?= "Stratix 10"
+#DEVICE ?= "1SG280LU3F50E2VG"
+
+
+check:
+ifndef PROJ
+        $(error "Define a PROJ environment variable")
+endif
+
+
+create: check
+#	quartus_sh --prepare -f "Agilex" -d "AGFB014R24A2E2VR0" -t $(PROJ) $(PROJ)
+	quartus_sh --prepare -f $(FAMILY) -d $(DEVICE) -t $(PROJ) $(PROJ)
+	echo "set_global_assignment -name VERILOG_FILE $(PROJ).v" >> $(PROJ).qsf
+	echo "set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_$(DEVICE)" >> $(PROJ).qsf
+	echo "set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0" >> $(PROJ).qsf
+	echo "set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100" >> $(PROJ).qsf
+	echo "set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256" >> $(PROJ).qsf
+	echo "set_global_assignment -name ENABLE_INTERMEDIATE_SNAPSHOTS ON" >> $(PROJ).qsf
+	echo "set_global_assignment -name FLOW_ENABLE_HYPER_RETIMER_FAST_FORWARD ON" >> $(PROJ).qsf
+#	echo "set_global_assignment -name OPTIMIZATION_MODE \"HIGH PLACEMENT ROUTABILITY EFFORT\"" >> $(PROJ).qsf
+
+
+compile: check
+	quartus_sh --flow compile $(PROJ)
+
+all: synth fit sta
+	echo "Done"
+
+synth:
+	quartus_syn --read_settings_files=on --write_settings_files=off $(PROJ) -c $(PROJ)
+
+fit:
+	quartus_fit --read_settings_files=on --write_settings_files=off $(PROJ) -c $(PROJ)
+
+sta:
+	quartus_sta $(PROJ) -c $(PROJ) --mode=finalize
+
+clean:
+	$(RM) -rf output_* qdb *.trace synth_dumps *.qws
