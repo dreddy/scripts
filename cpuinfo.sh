@@ -64,7 +64,7 @@ END {
 	close(fname)
 
 
-	printf("%d\t%s\t%s\t%s\t%s\t%s(%s)\t%s(%s)\t%s(%s)\t%s(%s)\n", cpuidx, pkgid, coreid,
+	printf("%d\t%s\t%s\t%s\t%s\t%6s(%s)\t%6s(%s)\t%6s(%s)\t%6s(%s)\n", cpuidx, pkgid, coreid,
 		ini_apicid[cpuidx], apicid[cpuidx], c0size, c0share, c1size, c1share, c2size, c2share,
 		c3size, c3share);
     }
