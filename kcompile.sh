@@ -3,7 +3,7 @@
 # Number of cpus default to SPR 112
 if [ -z "$1" ]
 then
-    ncpus=112
+    ncpus=`getconf _NPROCESSORS_ONLN`
 else
     ncpus=$1
 fi
