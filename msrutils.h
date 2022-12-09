@@ -9,6 +9,15 @@
 #include <stdint.h>
 #include <assert.h>
 
+
+typedef union {
+        uint64_t val64;
+        uint32_t val32[2];
+        uint16_t val16[4];
+        uint8_t  val8[8];
+} msr_val_t;
+
+
 /* Caller has to deal with the fd himself */
 int open_msrfd(int cpu)
 {
