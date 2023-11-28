@@ -6,8 +6,10 @@ IFS=$'\n'
 
 SPR_DSA=0x0b25
 SPR_IAA=0x0cfe
-SPR_QAT_PF=0x4940
-SPR_QAT_VF=0x4941
+SPR_QAT_PF1=0x4940
+SPR_QAT_VF1=0x4941
+SPR_QAT_PF2=0x4942
+SPR_QAT_VF2=0x4943
 SPR_DLB_PF=0x2710
 SPR_DLB_VF=0x2711
 QAT_C6X=0x37c8
@@ -26,13 +28,19 @@ do
         ${SPR_IAA})
             echo "SPR_IAA:    $vendor : $device"
             ;;
-        ${SPR_QAT_PF})
+        ${SPR_QAT_PF1})
+            echo "SPR_QAT_PF: $vendor : $device"
+            ;;
+        ${SPR_QAT_PF2})
             echo "SPR_QAT_PF: $vendor : $device"
             ;;
         ${SPR_DLB_PF})
             echo "SPR_DLB_PF: $vendor : $device"
             ;;
-        ${SPR_QAT_VF})
+        ${SPR_QAT_VF1})
+            echo "SPR_QAT_VF: $vendor : $device"
+            ;;
+        ${SPR_QAT_VF2})
             echo "SPR_QAT_VF: $vendor : $device"
             ;;
         ${SPR_DLB_VF})
